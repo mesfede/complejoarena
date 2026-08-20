@@ -47,12 +47,54 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const navLinks = [
-    { id: 'canchas', label: 'Canchas', icon: Calendar },
-    { id: 'cumpleanos', label: 'Cumpleaños', icon: Cake },
-    { id: 'torneos', label: 'Torneos', icon: Trophy },
-    { id: 'escuelitas', label: 'Escuelitas', icon: GraduationCap },
-    { id: 'buffet', label: 'Buffet', icon: Utensils },
-    { id: 'contacto', label: 'Ubicación', icon: MapPin },
+    { 
+      id: 'canchas', 
+      label: 'Canchas', 
+      icon: Calendar,
+      activeColor: 'text-[#c2f154]',
+      activeBorder: 'border-[#c2f154]/50',
+      hoverColor: 'hover:text-[#c2f154]',
+    },
+    { 
+      id: 'cumpleanos', 
+      label: 'Cumpleaños', 
+      icon: Cake,
+      activeColor: 'text-pink-400',
+      activeBorder: 'border-pink-500/50',
+      hoverColor: 'hover:text-pink-400',
+    },
+    { 
+      id: 'torneos', 
+      label: 'Torneos', 
+      icon: Trophy,
+      activeColor: 'text-amber-400',
+      activeBorder: 'border-amber-500/50',
+      hoverColor: 'hover:text-amber-400',
+    },
+    { 
+      id: 'escuelitas', 
+      label: 'Escuelitas', 
+      icon: GraduationCap,
+      activeColor: 'text-cyan-400',
+      activeBorder: 'border-cyan-500/50',
+      hoverColor: 'hover:text-cyan-400',
+    },
+    { 
+      id: 'buffet', 
+      label: 'Buffet', 
+      icon: Utensils,
+      activeColor: 'text-orange-400',
+      activeBorder: 'border-orange-500/50',
+      hoverColor: 'hover:text-orange-400',
+    },
+    { 
+      id: 'contacto', 
+      label: 'Ubicación', 
+      icon: MapPin,
+      activeColor: 'text-emerald-400',
+      activeBorder: 'border-emerald-500/50',
+      hoverColor: 'hover:text-emerald-400',
+    },
   ];
 
   const handleNavClick = (id: string) => {
@@ -121,13 +163,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                 key={link.id}
                 id={`nav-link-${link.id}`}
                 onClick={() => handleNavClick(link.id)}
-                className={`px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer border ${
                   isActive 
-                    ? 'bg-[#2a343d] text-white shadow-sm' 
-                    : 'text-slate-700 hover:text-slate-950 hover:bg-slate-200/80'
+                    ? `bg-[#2a343d] ${link.activeColor} ${link.activeBorder} shadow-sm font-black` 
+                    : `text-slate-700 ${link.hoverColor} hover:bg-slate-200/80 border-transparent`
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-[#c2f154]' : 'text-slate-500'}`} />
+                <Icon className={`w-4 h-4 shrink-0 ${isActive ? link.activeColor : 'text-slate-500'}`} />
                 <span>{link.label}</span>
               </button>
             );
@@ -177,11 +219,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={link.id}
                   onClick={() => handleNavClick(link.id)}
-                  className={`flex items-center gap-2 p-3 rounded-2xl text-xs font-bold text-left transition-colors ${
-                    isActive ? 'bg-[#2a343d] text-white' : 'bg-slate-100 text-slate-800'
+                  className={`flex items-center gap-2 p-3 rounded-2xl text-xs font-bold text-left transition-colors border ${
+                    isActive 
+                      ? `bg-[#2a343d] ${link.activeColor} ${link.activeBorder} shadow-sm font-black` 
+                      : 'bg-slate-100 text-slate-800 border-transparent hover:bg-slate-200'
                   }`}
                 >
-                  <Icon className="w-4 h-4 text-[#c2f154]" />
+                  <Icon className={`w-4 h-4 shrink-0 ${link.activeColor}`} />
                   <span>{link.label}</span>
                 </button>
               );

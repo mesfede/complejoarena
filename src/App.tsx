@@ -51,6 +51,31 @@ export default function App() {
     localStorage.setItem('arena_blocked_slots', JSON.stringify(blockedSlots));
   }, [blockedSlots]);
 
+  // Dynamic scroll observer to highlight active section in Navbar
+  useEffect(() => {
+    const sections = ['canchas', 'cumpleanos', 'torneos', 'escuelitas', 'buffet', 'contacto'];
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -50% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveTab(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const handleSelectSlot = (
     court: Court,
     time: string,
