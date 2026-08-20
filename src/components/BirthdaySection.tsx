@@ -40,37 +40,37 @@ export const BirthdaySection: React.FC = () => {
 
   const birthdaySlides = [
     {
-      img: "/cumples/cumple1.jpg",
+      img: "./cumples/cumple1.jpg",
       title: "Animación Deportiva & Profesores",
       tag: "Fútbol y Juegos Recreativos",
       description: "Coordinación permanente con profesores de Educación Física para torneos, penales, partidos y juegos guiados en cancha."
     },
     {
-      img: "/cumples/cumple2.jpg",
+      img: "./cumples/cumple2.jpg",
       title: "Inflables Deportivos Gigantes",
       tag: "Diversión y Saltos",
       description: "Circuitos y castillos inflables sobre césped sintético para que los chicos jueguen y se diviertan con total seguridad."
     },
     {
-      img: "/cumples/cumple3.jpg",
+      img: "./cumples/cumple3.jpg",
       title: "Canchas de Césped Sintético Exclusivas",
       tag: "Fútbol y Hockey",
       description: "Predio cerrado con iluminación LED y redes perimetrales para jugar partidos inolvidables."
     },
     {
-      img: "/cumples/cumple4.jpg",
+      img: "./cumples/cumple4.jpg",
       title: "Festejos Familiares y Tercer Tiempo",
       tag: "Momentos Inolvidables",
       description: "Espacio amplio para festejar con amigos, entrega de medallas y diplomas para el cumpleañero/a y sus invitados."
     },
     {
-      img: "/cumples/cumple5.jpg",
+      img: "./cumples/cumple5.jpg",
       title: "Quincho Techado & Sector Parrilla",
       tag: "Para Padres y Familias",
       description: "Salón equipado con mesas, bancos, parrilla encendida, heladeras y freezer para compartir un gran asado."
     },
     {
-      img: "/cumples/cumple6.jpg",
+      img: "./cumples/cumple6.jpg",
       title: "Catering, Bebidas y Mesa Dulce",
       tag: "Servicio Integral",
       description: "Snacks, gaseosas de primeras marcas, menú infantil y todo listo para el momento de la torta y velitas."

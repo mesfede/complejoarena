@@ -36,12 +36,12 @@ export const COURTS: Court[] = [
     priceNight: 34000,
     maxPlayers: 12,
     description: "Césped sintético premium Forbex 50mm con caucho amortiguado, redes perimetrales de alta resistencia y reflectores LED de máxima potencia.",
-    image: "/canchas/futbol1.jpg",
+    image: "./canchas/futbol1.jpg",
     galleryImages: [
-      "/canchas/futbol1.jpg",
-      "/canchas/futbol4.jpg",
-      "/canchas/futbol5.jpg",
-      "/canchas/futbol6.jpg"
+      "./canchas/futbol1.jpg",
+      "./canchas/futbol4.jpg",
+      "./canchas/futbol5.jpg",
+      "./canchas/futbol6.jpg"
     ],
     features: ["Césped sintético pro", "Redes perimetrales", "Tablero marcador", "Vestuarios con ducha"],
     badges: ["Más Popular", "Torneos Oficiales"]
@@ -58,15 +58,15 @@ export const COURTS: Court[] = [
     priceNight: 38000,
     maxPlayers: 14,
     description: "Excelente drenaje y pique de bocha nivel federación. Arcos reglamentarios acolchados para seguridad total y juego dinámico.",
-    image: "/canchas/hockey1.jpg",
+    image: "./canchas/hockey1.jpg",
     galleryImages: [
-      "/canchas/hockey1.jpg",
-      "/canchas/hockey2.jpg",
-      "/canchas/hockey3.jpg",
-      "/canchas/hockey4.jpg",
-      "/canchas/hockey5.jpg",
-      "/canchas/hockey6.jpg",
-      "/canchas/hockey7.jpg"
+      "./canchas/hockey1.jpg",
+      "./canchas/hockey2.jpg",
+      "./canchas/hockey3.jpg",
+      "./canchas/hockey4.jpg",
+      "./canchas/hockey5.jpg",
+      "./canchas/hockey6.jpg",
+      "./canchas/hockey7.jpg"
     ],
     features: ["Superficie rápida nivel pro", "Arcos reglamentarios acolchados", "División para entrenamiento", "Sector técnico"],
     badges: ["Cancha Exclusiva City Bell"]
@@ -83,12 +83,12 @@ export const COURTS: Court[] = [
     priceNight: 26000,
     maxPlayers: 10,
     description: "Ideal para partidos rápidos, entrenamientos de técnica individual y partidos recreativos de hockey con tablas laterales.",
-    image: "/canchas/hockey2.jpg",
+    image: "./canchas/hockey2.jpg",
     galleryImages: [
-      "/canchas/hockey2.jpg",
-      "/canchas/hockey3.jpg",
-      "/canchas/hockey4.jpg",
-      "/canchas/hockey1.jpg"
+      "./canchas/hockey2.jpg",
+      "./canchas/hockey3.jpg",
+      "./canchas/hockey4.jpg",
+      "./canchas/hockey1.jpg"
     ],
     features: ["Césped sintético", "Tablas laterales de contención", "Arcos cerrados"],
     badges: ["2 Canchas Disponibles"]
@@ -105,12 +105,12 @@ export const COURTS: Court[] = [
     priceNight: 26000,
     maxPlayers: 10,
     description: "Cancha gemela equipada con vallas de contención perimetral, ideal para entrenamientos de menores y partidos dinámicos.",
-    image: "/canchas/hockey5.jpg",
+    image: "./canchas/hockey5.jpg",
     galleryImages: [
-      "/canchas/hockey5.jpg",
-      "/canchas/hockey6.jpg",
-      "/canchas/hockey7.jpg",
-      "/canchas/hockey3.jpg"
+      "./canchas/hockey5.jpg",
+      "./canchas/hockey6.jpg",
+      "./canchas/hockey7.jpg",
+      "./canchas/hockey3.jpg"
     ],
     features: ["Tablas de contención", "Bocha rápida", "Redes altas"],
     badges: ["Ideal Escuelita y Mami Hockey"]

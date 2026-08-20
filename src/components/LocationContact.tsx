@@ -6,11 +6,11 @@ export const LocationContact: React.FC = () => {
   const [bgSlideIdx, setBgSlideIdx] = useState(0);
 
   const complexPhotos = [
-    "/canchas/futbol1.jpg",
-    "/cumples/cumple1.jpg",
-    "/canchas/futbol3.jpg",
-    "/cumples/cumple5.jpg",
-    "/canchas/futbol5.jpg"
+    "./canchas/futbol1.jpg",
+    "./cumples/cumple1.jpg",
+    "./canchas/futbol3.jpg",
+    "./cumples/cumple5.jpg",
+    "./canchas/futbol5.jpg"
   ];
 
   useEffect(() => {

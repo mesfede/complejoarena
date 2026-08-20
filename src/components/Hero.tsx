@@ -43,7 +43,7 @@ export const Hero: React.FC<HeroProps> = ({
   const heroSlides: HeroSlide[] = [
     { 
       id: 'slide-futbol-1', 
-      image: '/canchas/futbol1.jpg', 
+      image: './canchas/futbol1.jpg', 
       alt: 'Canchas de Fútbol 6 Complejo Arena',
       headlinePrefix: 'TODO EN UN',
       headlineHighlight: 'SOLO LUGAR',
@@ -54,7 +54,7 @@ export const Hero: React.FC<HeroProps> = ({
     },
     { 
       id: 'slide-hockey-1', 
-      image: '/canchas/hockey1.jpg', 
+      image: './canchas/hockey1.jpg', 
       alt: 'Canchas de Hockey Complejo Arena',
       headlinePrefix: 'DESCUBRÍ NUESTRO',
       headlineHighlight: 'PREDIO DEPORTIVO',
@@ -65,7 +65,7 @@ export const Hero: React.FC<HeroProps> = ({
     },
     { 
       id: 'slide-cumple-1', 
-      image: '/cumples/cumple1.jpg', 
+      image: './cumples/cumple1.jpg', 
       alt: 'Cumpleaños y Festejos Complejo Arena',
       headlinePrefix: 'FESTEJÁ TU CUMPLE',
       headlineHighlight: 'EN UN LUGAR ÚNICO',
@@ -76,7 +76,7 @@ export const Hero: React.FC<HeroProps> = ({
     },
     { 
       id: 'slide-futbol-2', 
-      image: '/canchas/futbol4.jpg', 
+      image: './canchas/futbol4.jpg', 
       alt: 'Fútbol Nocturno con Iluminación LED',
       headlinePrefix: 'VIVÍ LA PASIÓN DEL',
       headlineHighlight: 'TURNO NOCTURNO',
@@ -87,7 +87,7 @@ export const Hero: React.FC<HeroProps> = ({
     },
     { 
       id: 'slide-hockey-2', 
-      image: '/canchas/hockey2.jpg', 
+      image: './canchas/hockey2.jpg', 
       alt: 'Cancha de Césped Sintético Hockey',
       headlinePrefix: 'SUMATE A NUESTROS',
       headlineHighlight: 'TORNEOS & COPAS',
@@ -98,7 +98,7 @@ export const Hero: React.FC<HeroProps> = ({
     },
     { 
       id: 'slide-cumple-2', 
-      image: '/cumples/cumple2.jpg', 
+      image: './cumples/cumple2.jpg', 
       alt: 'Sector Quincho y Animación Deportiva',
       headlinePrefix: 'APRENDIZAJE & PASIÓN EN',
       headlineHighlight: 'ESCUELITAS DEPORTIVAS',
