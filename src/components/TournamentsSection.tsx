@@ -20,7 +20,7 @@ import {
 export const TournamentsSection: React.FC = () => {
   const [selectedSportFilter, setSelectedSportFilter] = useState<'all' | 'futbol' | 'hockey'>('all');
   const [inscribingTournament, setInscribingTournament] = useState<string | null>(null);
-  const [expandedTableId, setExpandedTableId] = useState<string>(TOURNAMENTS[0]?.id || '');
+  const [expandedTableId, setExpandedTableId] = useState<string>('');
   const [teamName, setTeamName] = useState('');
   const [captainName, setCaptainName] = useState('');
   const [captainPhone, setCaptainPhone] = useState('');
@@ -143,17 +143,25 @@ export const TournamentsSection: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Standings Table Toggle Button */}
+                  {/* Standings Table Toggle Button with pulsing animation CTA */}
                   {hasStandings && (
                     <button
                       onClick={() => setExpandedTableId(isExpanded ? '' : t.id)}
-                      className="w-full mb-4 py-2 px-3 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center justify-between transition-colors cursor-pointer"
+                      className={`w-full mb-4 py-2.5 px-3.5 rounded-xl text-xs font-bold flex items-center justify-between transition-all cursor-pointer ${
+                        isExpanded
+                          ? 'bg-amber-500/20 border border-amber-500/40 text-amber-300'
+                          : 'bg-amber-500/20 hover:bg-amber-500/35 border-2 border-amber-400/90 text-amber-200 shadow-[0_0_15px_rgba(251,191,36,0.35)] animate-pulse'
+                      }`}
                     >
-                      <span className="flex items-center gap-1.5">
-                        <TableIcon className="w-3.5 h-3.5" />
+                      <span className="flex items-center gap-2">
+                        <span className="relative flex h-2.5 w-2.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400"></span>
+                        </span>
+                        <TableIcon className="w-4 h-4 text-amber-400" />
                         <span>{isExpanded ? 'Ocultar Tabla de Posiciones' : 'Ver Tabla de Posiciones Actual'}</span>
                       </span>
-                      {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                      {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4 animate-bounce" />}
                     </button>
                   )}
 

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { COURTS, COMPLEX_INFO } from '../data/mockData';
-import { Court, SportType, Booking } from '../types';
+import { Court, SportType, Booking, SPORT_THEMES } from '../types';
 import { 
   SoccerBallIcon, 
   HockeyIcon,
@@ -46,6 +46,19 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
 }) => {
   // Ensure we have an active sport (default to futbol6 if 'all')
   const activeSport: SportType = selectedSport === 'all' ? 'futbol6' : selectedSport;
+
+  const getSportSaturationClass = (sport: SportType) => {
+    if (sport === 'futbol6') {
+      return 'saturate-[1.35] contrast-[1.08]'; // Fútbol: Alta saturación y contraste
+    }
+    if (sport === 'hockey7' || sport === 'hockey5') {
+      return 'saturate-[0.88] contrast-[1.02]'; // Hockey: Saturación media
+    }
+    if (sport === 'tenis') {
+      return 'saturate-[0.55] contrast-[0.95]'; // Tenis: Saturación baja/suave
+    }
+    return 'saturate-100';
+  };
 
   // Find all courts matching the active sport
   const matchingCourts = useMemo(() => {
@@ -255,7 +268,8 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
             
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {sportsTabs.map((tab) => {
-                const isSelected = activeSport === tab.id;
+                const isSelected = selectedSport === tab.id;
+                const theme = SPORT_THEMES[tab.id];
                 return (
                   <button
                     key={tab.id}
@@ -263,8 +277,8 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                     onClick={() => setSelectedSport(tab.id)}
                     className={`p-4 rounded-2xl font-bold uppercase tracking-wider flex items-center justify-center gap-3 transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-[#c2f154] text-slate-950 shadow-xl scale-[1.02] ring-2 ring-[#c2f154]'
-                        : 'bg-[#152019] hover:bg-[#1c2c22] text-slate-200 border border-[#c2f154]/20 hover:border-[#c2f154]/40'
+                        ? theme.activeBtnClass
+                        : theme.inactiveBtnClass
                     }`}
                   >
                     <div className={`w-9 h-9 rounded-full flex items-center justify-center ${isSelected ? 'bg-black/10' : 'bg-[#0f1712]'}`}>
@@ -278,47 +292,32 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
           </div>
 
         {/* ========================================================================= */}
-        {/* 2. DYNAMIC COURT PHOTO BANNER & SPECS */}
+        {/* 2. DYNAMIC COURT PHOTO BANNER */}
         {/* ========================================================================= */}
-        <div className="mb-6 rounded-3xl overflow-hidden bg-[#152019] border border-[#c2f154]/40 shadow-2xl relative">
+        <div className="mb-6 rounded-3xl overflow-hidden bg-[#152019] border border-white/20 shadow-2xl relative animate-fadeIn">
           
           {/* Background Court Photo Slideshow with Smooth Auto-Transitions */}
-          <div className="relative min-h-[260px] sm:min-h-[300px] flex flex-col justify-between p-6 sm:p-8 overflow-hidden">
-            {courtImages.map((img, idx) => (
-              <div
-                key={idx}
-                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                  activePhotoIdx === idx ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
-              >
-                <img
-                  src={img}
-                  alt={`${activeCourt.name} foto ${idx + 1}`}
-                  className="w-full h-full object-cover object-center brightness-[0.98] contrast-[1.08] saturate-[1.15]"
-                />
-              </div>
-            ))}
-            {/* Subtle soft gradient on left and bottom for crisp typography legibility */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+          <div className="relative min-h-[200px] sm:min-h-[240px] flex flex-col justify-between p-6 sm:p-8 overflow-hidden">
+              {courtImages.map((img, idx) => (
+                <div
+                  key={idx}
+                  className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                    activePhotoIdx === idx ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                  }`}
+                >
+                  <img
+                    src={img}
+                    alt={`${activeCourt.name} foto ${idx + 1}`}
+                    className={`w-full h-full object-cover object-center brightness-[0.95] transition-all duration-500 ${SPORT_THEMES[activeCourt.sport].saturationClass}`}
+                  />
+                </div>
+              ))}
+              {/* Subtle soft gradient on left and bottom for crisp typography legibility */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent" />
 
-            {/* Top Bar inside Banner */}
-            <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full bg-[#c2f154] text-slate-950 text-xs font-black uppercase tracking-wide shadow-md">
-                  {activeCourt.sportLabel}
-                </span>
-                <span className="px-3 py-1 rounded-full bg-black/75 backdrop-blur-md text-white text-xs font-bold border border-white/20 shadow-sm">
-                  {activeCourt.size}
-                </span>
-                <span className="px-3 py-1 rounded-full bg-black/75 backdrop-blur-md text-[#c2f154] text-xs font-bold border border-white/20 shadow-sm flex items-center gap-1">
-                  <Zap className="w-3 h-3 text-[#c2f154]" />
-                  <span>{activeCourt.lighting}</span>
-                </span>
-              </div>
-
-              {/* Sub-Court selector if Hockey 5 (Cancha A / B) and Arrows */}
-              <div className="flex items-center gap-2">
+              {/* Top Bar inside Banner: Sub-Court selector if Hockey 5 (Cancha A / Cancha B) */}
+              <div className="relative z-10 flex justify-end">
                 {matchingCourts.length > 1 && (
                   <div className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md p-1.5 rounded-2xl border border-white/20">
                     <span className="text-[11px] font-bold text-slate-300 uppercase px-2">Cancha:</span>
@@ -333,7 +332,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                           }}
                           className={`px-3 py-1 rounded-xl text-xs font-black uppercase transition-all cursor-pointer ${
                             isCurSelected
-                              ? 'bg-[#c2f154] text-slate-950 shadow-sm'
+                              ? `${SPORT_THEMES[activeSport].bgHex} text-slate-950 shadow-sm`
                               : 'text-slate-300 hover:text-white'
                           }`}
                         >
@@ -343,77 +342,20 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                     })}
                   </div>
                 )}
-
-                {/* Slideshow Arrows */}
-                {courtImages.length > 1 && (
-                  <div className="flex items-center gap-1 bg-black/60 backdrop-blur-md p-1 rounded-2xl border border-white/20">
-                    <button
-                      onClick={handlePrevPhoto}
-                      className="p-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
-                      aria-label="Foto anterior"
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </button>
-                    <span className="text-[11px] font-mono font-bold text-[#c2f154] px-1.5">
-                      {activePhotoIdx + 1}/{courtImages.length}
-                    </span>
-                    <button
-                      onClick={handleNextPhoto}
-                      className="p-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
-                      aria-label="Foto siguiente"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                )}
               </div>
-            </div>
 
-            {/* Bottom Content: Court Title, Description & Photos Strip */}
-            <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-4 mt-6">
-              <div className="max-w-2xl">
+              {/* Bottom Content: ONLY Court Title & Description (la bajada) */}
+              <div className="relative z-10 max-w-2xl mt-auto pt-4">
                 <h3 className="font-heading font-black text-2xl sm:text-3xl text-white uppercase drop-shadow-md">
                   {activeCourt.name}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-200 mt-1 leading-relaxed drop-shadow-sm">
+                <p className="text-xs sm:text-sm text-slate-200 mt-1 leading-relaxed drop-shadow-sm font-medium">
                   {activeCourt.description}
                 </p>
-
-                {/* Features Badges */}
-                <div className="flex flex-wrap gap-2 mt-3 text-[11px] text-slate-200">
-                  {activeCourt.features.map((feat, idx) => (
-                    <span key={idx} className="flex items-center gap-1 bg-black/50 px-2.5 py-1 rounded-lg border border-white/10">
-                      <span className="text-[#c2f154] font-bold">✓</span>
-                      <span>{feat}</span>
-                    </span>
-                  ))}
-                </div>
               </div>
 
-              {/* Photo Thumbnail Strip & Dots */}
-              {courtImages.length > 1 && (
-                <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md p-2 rounded-2xl border border-white/15 shrink-0">
-                  <Camera className="w-4 h-4 text-[#c2f154] ml-1" />
-                  <span className="text-[11px] font-bold text-slate-300 uppercase mr-1">Fotos:</span>
-                  <div className="flex gap-1.5">
-                    {courtImages.map((img, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setActivePhotoIdx(idx)}
-                        className={`w-11 h-9 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
-                          activePhotoIdx === idx ? 'border-[#c2f154] scale-105 shadow-md ring-2 ring-[#c2f154]/50' : 'border-white/20 opacity-60 hover:opacity-100'
-                        }`}
-                      >
-                        <img src={img} alt={`Vista ${idx + 1}`} className="w-full h-full object-cover" />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
-
           </div>
-        </div>
 
         {/* ========================================================================= */}
         {/* 3. CALENDARIO Y HORARIOS */}
@@ -488,6 +430,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
             <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none">
               {nextDays.map((d) => {
                 const isSelected = selectedDate === d.iso;
+                const currentTheme = SPORT_THEMES[activeSport];
                 return (
                   <button
                     key={d.iso}
@@ -495,7 +438,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                     onClick={() => setSelectedDate(d.iso)}
                     className={`flex flex-col items-center justify-center min-w-[76px] p-3 rounded-2xl border transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-[#c2f154] text-slate-950 border-[#c2f154] shadow-md scale-105 font-black'
+                        ? currentTheme.activeDateClass
                         : 'bg-[#22292f] hover:bg-[#283138] text-slate-200 border-white/10 hover:border-white/30'
                     }`}
                   >
@@ -513,120 +456,122 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
           {/* ========================================================================= */}
           {/* HORARIOS DISPONIBLES */}
           {/* ========================================================================= */}
-          <div className="space-y-3 pt-2">
-            <div className="flex items-center justify-between text-xs text-slate-300">
-              <span className="font-bold text-sm uppercase tracking-wider flex items-center gap-2 text-white">
-                <Clock className="w-4 h-4 text-[#c2f154]" />
-                <span>3. Seleccioná el Horario para el {selectedDate}:</span>
-              </span>
-              <span className="text-slate-400">Duración: 1 hora</span>
-            </div>
+          {selectedDate && (
+            <div className="space-y-3 pt-2 animate-fadeIn">
+              <div className="flex items-center justify-between text-xs text-slate-300">
+                <span className="font-bold text-sm uppercase tracking-wider flex items-center gap-2 text-white">
+                  <Clock className={`w-4 h-4 ${SPORT_THEMES[activeSport].textAccentClass}`} />
+                  <span>3. Seleccioná el Horario:</span>
+                </span>
+                <span className="text-slate-400">Duración: 1 hora</span>
+              </div>
 
-            {/* Slots Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-              {standardHours
-                .filter((h) => {
-                  if (timeFilter === 'day') return !h.isNight;
-                  if (timeFilter === 'night') return h.isNight;
-                  return true;
-                })
-                .map((h) => {
-                  const status = getSlotStatus(activeCourt, h.time);
-                  const basePrice = h.isNight ? activeCourt.priceNight : activeCourt.priceDay;
-                  const finalPrice = isFixedBooking ? Math.round(basePrice * 0.9) : basePrice;
+              {/* Slots Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                {standardHours
+                  .filter((h) => {
+                    if (timeFilter === 'day') return !h.isNight;
+                    if (timeFilter === 'night') return h.isNight;
+                    return true;
+                  })
+                  .map((h) => {
+                    const status = getSlotStatus(activeCourt, h.time);
+                    const basePrice = h.isNight ? activeCourt.priceNight : activeCourt.priceDay;
+                    const finalPrice = isFixedBooking ? Math.round(basePrice * 0.9) : basePrice;
 
-                  if (!status.available) {
-                    const isBlocked = status.type === 'blocked';
-                    return (
-                      <div
-                        key={h.time}
-                        className={`p-3.5 rounded-2xl border flex flex-col justify-between opacity-85 select-none ${
-                          isBlocked
-                            ? 'bg-amber-950/40 border-amber-500/40 text-amber-200'
-                            : 'bg-rose-950/40 border-rose-500/40 text-rose-200'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between font-mono font-bold text-sm">
-                          <span>{h.time} hs</span>
-                          <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-black/40 font-sans">
-                            {isBlocked ? 'Mantenimiento' : 'Ocupado'}
+                    if (!status.available) {
+                      const isBlocked = status.type === 'blocked';
+                      return (
+                        <div
+                          key={h.time}
+                          className={`p-3.5 rounded-2xl border flex flex-col justify-between opacity-85 select-none ${
+                            isBlocked
+                              ? 'bg-amber-950/40 border-amber-500/40 text-amber-200'
+                              : 'bg-rose-950/40 border-rose-500/40 text-rose-200'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between font-mono font-bold text-sm">
+                            <span>{h.time} hs</span>
+                            <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-black/40 font-sans">
+                              {isBlocked ? 'Mantenimiento' : 'Ocupado'}
+                            </span>
+                          </div>
+                          <span className="text-[11px] font-semibold mt-2 truncate">
+                            {status.reason}
                           </span>
                         </div>
-                        <span className="text-[11px] font-semibold mt-2 truncate">
-                          {status.reason}
-                        </span>
-                      </div>
-                    );
-                  }
+                      );
+                    }
 
-                  // Available slot
-                  const isNight = h.isNight;
-                  return (
-                    <button
-                      key={h.time}
-                      id={`slot-btn-${h.time.replace(':', '-')}`}
-                      onClick={() =>
-                        onSelectSlot(activeCourt, h.time, h.isNight, finalPrice, isFixedBooking)
-                      }
-                      className={`group p-3.5 rounded-2xl text-left transition-all duration-150 hover:-translate-y-0.5 shadow-sm hover:shadow-md cursor-pointer flex flex-col justify-between hover:bg-[#c2f154] hover:border-[#c2f154] ${
-                        isNight
-                          ? 'bg-gradient-to-br from-[#152820] to-[#0d1d17] border border-[#c2f154]/30'
-                          : 'bg-gradient-to-br from-[#262d24] to-[#1e241c] border border-amber-400/25'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between font-mono font-black text-sm text-white group-hover:text-slate-950">
-                        <span>{h.time} hs</span>
-                        <span className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded flex items-center gap-1 group-hover:bg-transparent group-hover:text-slate-950 ${
+                    // Available slot
+                    const isNight = h.isNight;
+                    return (
+                      <button
+                        key={h.time}
+                        id={`slot-btn-${h.time.replace(':', '-')}`}
+                        onClick={() =>
+                          onSelectSlot(activeCourt, h.time, h.isNight, finalPrice, isFixedBooking)
+                        }
+                        className={`group p-3.5 rounded-2xl text-left transition-all duration-150 hover:-translate-y-0.5 shadow-sm hover:shadow-md cursor-pointer flex flex-col justify-between hover:bg-[#c2f154] hover:border-[#c2f154] ${
                           isNight
-                            ? 'bg-[#c2f154]/15 text-[#c2f154]'
-                            : 'bg-amber-400/15 text-amber-300'
-                        }`}>
-                          {isNight ? (
-                            <>
-                              <Moon className="w-3 h-3 text-[#c2f154] group-hover:text-slate-950" />
-                              <span>Noche</span>
-                            </>
-                          ) : (
-                            <>
-                              <Sun className="w-3 h-3 text-amber-400 group-hover:text-slate-950" />
-                              <span>Tarde</span>
-                            </>
-                          )}
-                        </span>
-                      </div>
+                            ? 'bg-gradient-to-br from-[#152820] to-[#0d1d17] border border-[#c2f154]/30'
+                            : 'bg-gradient-to-br from-[#262d24] to-[#1e241c] border border-amber-400/25'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between font-mono font-black text-sm text-white group-hover:text-slate-950">
+                          <span>{h.time} hs</span>
+                          <span className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded flex items-center gap-1 group-hover:bg-transparent group-hover:text-slate-950 ${
+                            isNight
+                              ? 'bg-[#c2f154]/15 text-[#c2f154]'
+                              : 'bg-amber-400/15 text-amber-300'
+                          }`}>
+                            {isNight ? (
+                              <>
+                                <Moon className="w-3 h-3 text-[#c2f154] group-hover:text-slate-950" />
+                                <span>Noche</span>
+                              </>
+                            ) : (
+                              <>
+                                <Sun className="w-3 h-3 text-amber-400 group-hover:text-slate-950" />
+                                <span>Tarde</span>
+                              </>
+                            )}
+                          </span>
+                        </div>
 
-                      <div className="mt-2.5 flex items-baseline justify-between">
-                        <span className={`text-sm font-black group-hover:text-slate-950 ${
-                          isNight ? 'text-[#c2f154]' : 'text-amber-300'
-                        }`}>
-                          ${finalPrice.toLocaleString('es-AR')}
-                        </span>
-                        <span className="text-[11px] font-bold text-emerald-400 group-hover:text-slate-950 uppercase tracking-wider">
-                          Libre
-                        </span>
-                      </div>
-                    </button>
-                  );
-                })}
-            </div>
-
-            {/* Deposit note */}
-            <div className="p-3.5 bg-[#22292f] rounded-2xl border border-white/10 text-xs text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-4">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#c2f154] shrink-0" />
-                <span>Para confirmar la reserva solo abonás el <strong>30% de seña</strong> vía Mercado Pago o Transferencia.</span>
+                        <div className="mt-2.5 flex items-baseline justify-between">
+                          <span className={`text-sm font-black group-hover:text-slate-950 ${
+                            isNight ? 'text-[#c2f154]' : 'text-amber-300'
+                          }`}>
+                            ${finalPrice.toLocaleString('es-AR')}
+                          </span>
+                          <span className="text-[11px] font-bold text-emerald-400 group-hover:text-slate-950 uppercase tracking-wider">
+                            Libre
+                          </span>
+                        </div>
+                      </button>
+                    );
+                  })}
               </div>
-              <a
-                href={`https://wa.me/${COMPLEX_INFO.whatsapp1}?text=Hola%20Complejo%20Arena!%20Quiero%20consultar%20por%20un%20turno%20de%20${encodeURIComponent(activeCourt.sportLabel)}`}
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs font-bold text-[#c2f154] uppercase tracking-wide hover:underline shrink-0"
-              >
-                ¿Dudas? Consultar por WhatsApp ↗
-              </a>
-            </div>
 
-          </div>
+              {/* Deposit note */}
+              <div className="p-3.5 bg-[#22292f] rounded-2xl border border-white/10 text-xs text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-4">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-[#c2f154] shrink-0" />
+                  <span>Para confirmar la reserva solo abonás el <strong>30% de seña</strong> vía Mercado Pago o Transferencia.</span>
+                </div>
+                <a
+                  href={`https://wa.me/${COMPLEX_INFO.whatsapp1}?text=Hola%20Complejo%20Arena!%20Quiero%20consultar%20por%20un%20turno%20de%20${encodeURIComponent(activeCourt.sportLabel)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-xs font-bold text-[#c2f154] uppercase tracking-wide hover:underline shrink-0"
+                >
+                  ¿Dudas? Consultar por WhatsApp ↗
+                </a>
+              </div>
+
+            </div>
+          )}
 
         </div>
 

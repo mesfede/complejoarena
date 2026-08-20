@@ -153,3 +153,62 @@ export interface BuffetCategory {
     badge?: string;
   }[];
 }
+
+export interface SportColorTheme {
+  hex: string;
+  bgHex: string;
+  activeBtnClass: string;
+  inactiveBtnClass: string;
+  activeDateClass: string;
+  badgeClass: string;
+  textAccentClass: string;
+  borderAccentClass: string;
+  saturationClass: string;
+}
+
+export const SPORT_THEMES: Record<SportType, SportColorTheme> = {
+  futbol6: {
+    hex: '#c2f154',
+    bgHex: 'bg-[#c2f154]',
+    activeBtnClass: 'bg-[#c2f154] text-slate-950 border-[#c2f154] shadow-[0_0_18px_rgba(194,241,84,0.45)] font-black scale-[1.02]',
+    inactiveBtnClass: 'bg-[#152019] hover:bg-[#1c2c22] text-slate-200 border border-[#c2f154]/20 hover:border-[#c2f154]/40',
+    activeDateClass: 'bg-[#c2f154] text-slate-950 border-[#c2f154] shadow-[0_0_15px_rgba(194,241,84,0.45)] font-black ring-2 ring-[#c2f154]/50 scale-105',
+    badgeClass: 'bg-[#c2f154]/15 border-[#c2f154]/30 text-[#c2f154]',
+    textAccentClass: 'text-[#c2f154]',
+    borderAccentClass: 'border-[#c2f154]',
+    saturationClass: 'saturate-[1.35] contrast-[1.08]',
+  },
+  hockey7: {
+    hex: '#82ec68',
+    bgHex: 'bg-[#82ec68]',
+    activeBtnClass: 'bg-[#82ec68] text-slate-950 border-[#82ec68] shadow-[0_0_18px_rgba(130,236,104,0.45)] font-black scale-[1.02]',
+    inactiveBtnClass: 'bg-[#152019] hover:bg-[#1c2c22] text-slate-200 border border-[#82ec68]/20 hover:border-[#82ec68]/40',
+    activeDateClass: 'bg-[#82ec68] text-slate-950 border-[#82ec68] shadow-[0_0_15px_rgba(130,236,104,0.45)] font-black ring-2 ring-[#82ec68]/50 scale-105',
+    badgeClass: 'bg-[#82ec68]/15 border-[#82ec68]/30 text-[#82ec68]',
+    textAccentClass: 'text-[#82ec68]',
+    borderAccentClass: 'border-[#82ec68]',
+    saturationClass: 'saturate-[0.90] contrast-[1.02]',
+  },
+  hockey5: {
+    hex: '#6ee7b7',
+    bgHex: 'bg-[#6ee7b7]',
+    activeBtnClass: 'bg-[#6ee7b7] text-slate-950 border-[#6ee7b7] shadow-[0_0_18px_rgba(110,231,183,0.45)] font-black scale-[1.02]',
+    inactiveBtnClass: 'bg-[#152019] hover:bg-[#1c2c22] text-slate-200 border border-[#6ee7b7]/20 hover:border-[#6ee7b7]/40',
+    activeDateClass: 'bg-[#6ee7b7] text-slate-950 border-[#6ee7b7] shadow-[0_0_18px_rgba(110,231,183,0.45)] font-black ring-2 ring-[#6ee7b7]/50 scale-105',
+    badgeClass: 'bg-[#6ee7b7]/15 border-[#6ee7b7]/30 text-[#6ee7b7]',
+    textAccentClass: 'text-[#6ee7b7]',
+    borderAccentClass: 'border-[#6ee7b7]',
+    saturationClass: 'saturate-[0.70] contrast-[0.98]',
+  },
+  tenis: {
+    hex: '#bbf7d0',
+    bgHex: 'bg-[#bbf7d0]',
+    activeBtnClass: 'bg-[#bbf7d0] text-slate-950 border-[#bbf7d0] shadow-[0_0_18px_rgba(187,247,208,0.45)] font-black scale-[1.02]',
+    inactiveBtnClass: 'bg-[#152019] hover:bg-[#1c2c22] text-slate-200 border border-[#bbf7d0]/20 hover:border-[#bbf7d0]/40',
+    activeDateClass: 'bg-[#bbf7d0] text-slate-950 border-[#bbf7d0] shadow-[0_0_15px_rgba(187,247,208,0.45)] font-black ring-2 ring-[#bbf7d0]/50 scale-105',
+    badgeClass: 'bg-[#bbf7d0]/15 border-[#bbf7d0]/30 text-[#bbf7d0]',
+    textAccentClass: 'text-[#bbf7d0]',
+    borderAccentClass: 'border-[#bbf7d0]',
+    saturationClass: 'saturate-[0.50] contrast-[0.95]',
+  },
+};

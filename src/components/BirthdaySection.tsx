@@ -18,10 +18,13 @@ import {
   Camera,
   Sparkles,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 
 export const BirthdaySection: React.FC = () => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [selectedPackage, setSelectedPackage] = useState<BirthdayPackage>(BIRTHDAY_PACKAGES[1]);
   const [childName, setChildName] = useState('');
   const [childAge, setChildAge] = useState(8);
@@ -152,7 +155,7 @@ export const BirthdaySection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Section Title with pink badge */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
+        <div className="text-center max-w-3xl mx-auto mb-8">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-pink-500/20 border border-pink-500/30 text-pink-300 text-xs font-bold uppercase tracking-wider mb-3 shadow-sm">
             <Cake className="w-3.5 h-3.5" />
             <span>Festejos y Cumpleaños</span>
@@ -343,8 +346,31 @@ export const BirthdaySection: React.FC = () => {
           })}
         </div>
 
-        {/* Interactive Birthday Cotizador Form */}
-        <div className="bg-[#2b1f28] rounded-3xl border border-pink-500/40 p-6 sm:p-10 shadow-2xl">
+        {/* Interactive Birthday Cotizador Toggle or Form */}
+        {!isExpanded ? (
+          <div className="text-center pt-2">
+            <button
+              onClick={() => setIsExpanded(true)}
+              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-600 text-white font-black text-sm sm:text-base uppercase tracking-wider shadow-2xl flex items-center justify-center gap-3 mx-auto transition-all transform hover:scale-105 active:scale-95 border border-pink-300/40 cursor-pointer group"
+            >
+              <Cake className="w-5 h-5 text-pink-200 group-hover:rotate-12 transition-transform" />
+              <span>Cotizar y Personalizar tu Cumpleaños en Vivo</span>
+              <ChevronDown className="w-5 h-5 text-pink-200 animate-bounce" />
+            </button>
+          </div>
+        ) : (
+          <div className="animate-fadeIn space-y-4">
+            <div className="flex justify-end">
+              <button
+                onClick={() => setIsExpanded(false)}
+                className="px-4 py-2 rounded-xl bg-pink-500/20 hover:bg-pink-500/30 border border-pink-500/40 text-pink-200 text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-colors cursor-pointer"
+              >
+                <span>Ocultar Cotizador</span>
+                <ChevronUp className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="bg-[#2b1f28] rounded-3xl border border-pink-500/40 p-6 sm:p-10 shadow-2xl">
           <div className="max-w-3xl mx-auto">
             
             <div className="flex items-center gap-3 pb-6 border-b border-pink-500/20 mb-8">
@@ -588,7 +614,8 @@ export const BirthdaySection: React.FC = () => {
 
           </div>
         </div>
-
+      </div>
+      )}
       </div>
     </section>
   );

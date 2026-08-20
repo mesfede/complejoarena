@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { Court, SportType, Booking } from '../types';
+import { Court, SportType, Booking, SPORT_THEMES } from '../types';
 import { SoccerBallIcon, HockeyIcon, TennisIcon } from './SportsIcons';
 import { 
   Calendar, 
@@ -60,6 +60,19 @@ export const MobileBookingView: React.FC<MobileBookingViewProps> = ({
 
   const activeSport: SportType = selectedSport === 'all' ? 'futbol6' : selectedSport;
   const courtImages = activeCourt.galleryImages || [activeCourt.image];
+
+  const getSportSaturationClass = (sport: SportType) => {
+    if (sport === 'futbol6') {
+      return 'saturate-[1.35] contrast-[1.08]';
+    }
+    if (sport === 'hockey7' || sport === 'hockey5') {
+      return 'saturate-[0.88] contrast-[1.02]';
+    }
+    if (sport === 'tenis') {
+      return 'saturate-[0.55] contrast-[0.95]';
+    }
+    return 'saturate-100';
+  };
 
   const sports = [
     { 
@@ -157,16 +170,17 @@ export const MobileBookingView: React.FC<MobileBookingViewProps> = ({
       </div>
 
       {/* 2. COMPACT SPORTS SELECTOR BAR */}
-      <div id="selector-de-canchas" className="flex gap-1.5 p-1 bg-[#141e17] rounded-2xl border border-[#c2f154]/25 shadow-md overflow-hidden">
+      <div id="selector-de-canchas" className="flex gap-1.5 p-1 bg-[#141e17] rounded-2xl border border-white/15 shadow-md overflow-hidden">
         {sports.map((s) => {
           const isActive = activeSport === s.id;
+          const theme = SPORT_THEMES[s.id];
           return (
             <button
               key={s.id}
               onClick={() => setSelectedSport(s.id)}
               className={`min-w-0 flex-1 py-2 px-1 rounded-xl font-black text-[11px] uppercase tracking-tight flex items-center justify-center gap-1 transition-all active:scale-95 cursor-pointer overflow-hidden ${
                 isActive
-                  ? 'bg-[#c2f154] text-slate-950 shadow-md font-black'
+                  ? `${theme.bgHex} text-slate-950 shadow-md font-black`
                   : 'bg-transparent text-slate-300 hover:text-white'
               }`}
             >
@@ -181,7 +195,7 @@ export const MobileBookingView: React.FC<MobileBookingViewProps> = ({
 
       {/* 3. SUB-COURT SELECTOR BAR (Si hay varias canchas para un deporte) */}
       {matchingCourts.length > 1 && (
-        <div className="flex items-center justify-between bg-[#18281f] p-2.5 rounded-2xl border border-[#c2f154]/30 shadow-sm">
+        <div className="flex items-center justify-between bg-[#18281f] p-2.5 rounded-2xl border border-white/15 shadow-sm">
           <span className="text-xs font-bold text-white uppercase flex items-center gap-1.5">
             <Layers className="w-3.5 h-3.5 text-[#c2f154]" />
             <span>Seleccionar Cancha:</span>
@@ -189,13 +203,14 @@ export const MobileBookingView: React.FC<MobileBookingViewProps> = ({
           <div className="flex gap-1.5">
             {matchingCourts.map((c) => {
               const isSel = selectedSubCourtId === c.id;
+              const currentTheme = SPORT_THEMES[activeSport];
               return (
                 <button
                   key={c.id}
                   onClick={() => setSelectedSubCourtId(c.id)}
                   className={`px-3 py-1 rounded-xl text-xs font-black uppercase transition-all cursor-pointer ${
                     isSel
-                      ? 'bg-[#c2f154] text-slate-950 shadow-md scale-105'
+                      ? `${currentTheme.bgHex} text-slate-950 shadow-md scale-105`
                       : 'bg-[#223329] text-slate-300 hover:text-white border border-white/10'
                   }`}
                 >
@@ -207,70 +222,47 @@ export const MobileBookingView: React.FC<MobileBookingViewProps> = ({
         </div>
       )}
 
-      {/* 4. COMPACT COURT PREVIEW & PRICE BAR */}
-      <div className="rounded-2xl overflow-hidden bg-[#152019] border border-[#c2f154]/30 shadow-lg relative">
-        <div className="relative h-28 overflow-hidden">
-          <img
-            src={courtImages[activePhotoIdx] || courtImages[0]}
-            alt={activeCourt.name}
-            className="w-full h-full object-cover brightness-[0.80]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+      {/* 4. COMPACT COURT PREVIEW BANNER */}
+      <div className="rounded-2xl overflow-hidden bg-[#152019] border border-white/20 shadow-lg relative animate-fadeIn">
+          <div className="relative p-4 flex flex-col justify-end min-h-[110px] overflow-hidden">
+            <img
+              src={courtImages[activePhotoIdx] || courtImages[0]}
+              alt={activeCourt.name}
+              className={`absolute inset-0 w-full h-full object-cover brightness-[0.85] transition-all duration-500 ${SPORT_THEMES[activeCourt.sport].saturationClass}`}
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
-          {/* Subcourt Selector if Hockey 5 */}
-          {matchingCourts.length > 1 && (
-            <div className="absolute top-2 right-2 z-10 flex gap-1 bg-black/80 backdrop-blur-md p-1 rounded-xl border border-white/20">
-              {matchingCourts.map((c) => (
-                <button
-                  key={c.id}
-                  onClick={() => setSelectedSubCourtId(c.id)}
-                  className={`px-2 py-0.5 rounded-lg text-[10px] font-black uppercase transition-all ${
-                    selectedSubCourtId === c.id 
-                      ? 'bg-[#c2f154] text-slate-950 shadow-sm' 
-                      : 'text-slate-300'
-                  }`}
-                >
-                  {c.name.includes('A') ? 'Cancha A' : 'Cancha B'}
-                </button>
-              ))}
-            </div>
-          )}
+            {/* Subcourt Selector if Hockey 5 */}
+            {matchingCourts.length > 1 && (
+              <div className="absolute top-2 right-2 z-10 flex gap-1 bg-black/80 backdrop-blur-md p-1 rounded-xl border border-white/20">
+                {matchingCourts.map((c) => (
+                  <button
+                    key={c.id}
+                    onClick={() => setSelectedSubCourtId(c.id)}
+                    className={`px-2 py-0.5 rounded-lg text-[10px] font-black uppercase transition-all ${
+                      selectedSubCourtId === c.id 
+                        ? `${SPORT_THEMES[activeSport].bgHex} text-slate-950 shadow-sm` 
+                        : 'text-slate-300'
+                    }`}
+                  >
+                    {c.name.includes('A') ? 'Cancha A' : 'Cancha B'}
+                  </button>
+                ))}
+              </div>
+            )}
 
-          {/* Photo Dots/Counter if multiple */}
-          {courtImages.length > 1 && (
-            <div className="absolute top-2 left-2 z-10 flex items-center gap-1 bg-black/75 backdrop-blur-md px-2 py-0.5 rounded-md text-[9px] font-bold text-white border border-white/10">
-              <span>{activePhotoIdx + 1}/{courtImages.length}</span>
-            </div>
-          )}
-
-          {/* Bottom Court Details & Unified Price Badge */}
-          <div className="absolute bottom-2 inset-x-2.5 z-10 flex items-end justify-between gap-2">
-            <div>
+            {/* Bottom Court Details: ONLY Name & Description */}
+            <div className="relative z-10">
               <h3 className="font-heading font-black text-base text-white uppercase drop-shadow-md leading-tight">
                 {activeCourt.name}
               </h3>
-              <div className="flex items-center gap-1.5 mt-0.5 text-[10px] text-slate-300 font-medium">
-                <span className="px-1.5 py-0.5 rounded bg-black/70 text-[#c2f154] font-bold">
-                  {activeCourt.size}
-                </span>
-                <span>•</span>
-                <span>{activeCourt.lighting}</span>
-              </div>
-            </div>
-
-            {/* Price Pill */}
-            <div className="text-right bg-black/85 backdrop-blur-md px-2.5 py-1 rounded-xl border border-white/15">
-              <span className="text-[9px] uppercase font-bold text-slate-400 block">Tarifa por Hora</span>
-              <div className="text-[11px] font-black text-white">
-                <span className="text-slate-300">☀️ ${currentPriceDay.toLocaleString('es-AR')}</span>
-                <span className="mx-1 text-slate-500">|</span>
-                <span className="text-[#c2f154]">🌙 ${currentPriceNight.toLocaleString('es-AR')}</span>
-              </div>
+              <p className="text-[11px] text-slate-200 mt-1 leading-snug drop-shadow-sm font-medium">
+                {activeCourt.description}
+              </p>
             </div>
           </div>
         </div>
-      </div>
 
       {/* 3. TURNO FIJO MENSUAL COMPACT STRIP */}
       <div className="flex items-center justify-between bg-[#17231c] px-3.5 py-2 rounded-xl border border-[#c2f154]/20 shadow-sm">
@@ -342,6 +334,7 @@ export const MobileBookingView: React.FC<MobileBookingViewProps> = ({
         >
           {nextDays.map((d) => {
             const isSelected = selectedDate === d.iso;
+            const currentTheme = SPORT_THEMES[activeSport];
             return (
               <button
                 key={d.iso}
@@ -349,7 +342,7 @@ export const MobileBookingView: React.FC<MobileBookingViewProps> = ({
                 onClick={() => setSelectedDate(d.iso)}
                 className={`w-[58px] min-w-[58px] py-2 px-1 rounded-2xl flex flex-col items-center justify-center transition-all active:scale-95 cursor-pointer shrink-0 border ${
                   isSelected
-                    ? 'bg-[#c2f154] text-slate-950 border-[#c2f154] font-black shadow-lg ring-2 ring-[#c2f154]/40'
+                    ? `${currentTheme.bgHex} text-slate-950 border-transparent font-black shadow-lg ring-2 ring-white/30 scale-105`
                     : 'bg-[#22292f] text-slate-300 border-white/10 hover:border-white/25 active:bg-[#283238]'
                 }`}
               >
@@ -367,9 +360,10 @@ export const MobileBookingView: React.FC<MobileBookingViewProps> = ({
       </div>
 
       {/* 5. TIME SLOTS: DISTINGUISHED DAYLIGHT / NIGHT STADIUM SECTIONS */}
-      <div className="space-y-3">
-        
-        {/* Turno Tarde (Atmósfera Cálida Vespertina) */}
+      {selectedDate && (
+        <div className="space-y-3 animate-fadeIn">
+          
+          {/* Turno Tarde (Atmósfera Cálida Vespertina) */}
         <div className="bg-gradient-to-br from-[#242b23] via-[#1f261e] to-[#182017] p-3.5 rounded-2xl border border-amber-400/25 shadow-md">
           <div className="flex items-center justify-between mb-2.5">
             <span className="text-[11px] font-black uppercase text-amber-300 flex items-center gap-1.5 bg-amber-400/10 px-2 py-0.5 rounded-lg border border-amber-400/20">
@@ -470,6 +464,7 @@ export const MobileBookingView: React.FC<MobileBookingViewProps> = ({
         </div>
 
       </div>
+      )}
 
     </div>
   );

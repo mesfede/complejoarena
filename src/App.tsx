@@ -17,8 +17,8 @@ import { Footer } from './components/Footer';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>('canchas');
-  const [selectedSport, setSelectedSport] = useState<SportType | 'all'>('all');
-  const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
+  const [selectedSport, setSelectedSport] = useState<SportType | 'all'>('futbol6');
+  const [selectedDate, setSelectedDate] = useState<string>('');
 
   // Persistent bookings and block slots
   const [allBookings, setAllBookings] = useState<Booking[]>(() => {
