@@ -193,7 +193,7 @@ export const Hero: React.FC<HeroProps> = ({
       {/* ========================================================================= */}
       {/* HERO CONTENT: SPACIOUS CENTERED MOBILE HERO / RICH DESKTOP SPREAD */}
       {/* ========================================================================= */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-6 sm:pb-8 flex-1 flex flex-col justify-between items-center w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-8 sm:pb-8 flex-1 flex flex-col justify-between items-center w-full">
         
         {/* TOP SPACER (gives breathing room under the header) */}
         <div className="w-full hidden sm:block h-6 sm:h-12 lg:h-16" />
@@ -201,11 +201,11 @@ export const Hero: React.FC<HeroProps> = ({
         {/* CENTERED HERO CONTENT (TITULO DINÁMICO, BAJADA Y CTA) */}
         <div 
           key={currentSlide}
-          className="text-center max-w-4xl mx-auto flex-1 flex flex-col justify-center items-center my-auto py-6 sm:py-2 select-none"
+          className="text-center max-w-4xl mx-auto flex-1 flex flex-col justify-center items-center my-auto py-8 sm:py-2 select-none"
         >
           {/* Main Headline (Exact 2 Lines with Staggered Motion Blur) */}
-          <h1 className="font-heading font-black text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.08] uppercase mb-3 sm:mb-4 drop-shadow-[0_4px_25px_rgba(0,0,0,0.95)]">
-            <span className="block text-white mb-0.5 sm:mb-1 animate-stagger-1">
+          <h1 className="font-heading font-black text-[2.35rem] xs:text-[2.65rem] sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.05] uppercase mb-3 sm:mb-4 drop-shadow-[0_4px_25px_rgba(0,0,0,0.95)]">
+            <span className="block text-white mb-1 sm:mb-1 animate-stagger-1">
               {heroSlides[currentSlide].headlinePrefix}
             </span>
             <span className="block text-[#c2f154] drop-shadow-[0_0_25px_rgba(194,241,84,0.35)] animate-stagger-2">
@@ -214,12 +214,12 @@ export const Hero: React.FC<HeroProps> = ({
           </h1>
 
           {/* Subtitle / Bajada */}
-          <p className="text-sm sm:text-lg lg:text-xl text-slate-100 font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] px-2 animate-stagger-3">
+          <p className="text-[15px] sm:text-lg lg:text-xl text-slate-100 font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] px-3 mt-1.5 sm:mt-0 animate-stagger-3">
             {heroSlides[currentSlide].subtitle}
           </p>
 
           {/* Mobile Direct CTA Button */}
-          <div className="mt-5 sm:hidden flex justify-center w-full px-4 animate-stagger-4">
+          <div className="mt-8 sm:hidden flex justify-center w-full px-4 animate-stagger-4">
             <button
               onClick={() => onNavigateSection(heroSlides[currentSlide].targetSection)}
               className="w-full max-w-xs py-3.5 px-6 rounded-2xl bg-[#c2f154] hover:bg-[#b2e342] text-slate-950 font-black text-sm uppercase tracking-wide shadow-2xl active:scale-95 transition-all cursor-pointer border border-[#c2f154] flex items-center justify-center gap-2"

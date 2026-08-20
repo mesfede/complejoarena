@@ -112,12 +112,18 @@ export const MobileBookingView: React.FC<MobileBookingViewProps> = ({
   const currentPriceDay = isFixedBooking ? Math.round(activeCourt.priceDay * 0.9) : activeCourt.priceDay;
   const currentPriceNight = isFixedBooking ? Math.round(activeCourt.priceNight * 0.9) : activeCourt.priceNight;
 
-  // Scroll active date into view smoothly
+  // Scroll active date horizontally in container ONLY (without scrolling browser window)
   useEffect(() => {
     if (!scrollContainerRef.current) return;
-    const selectedBtn = scrollContainerRef.current.querySelector(`[data-date="${selectedDate}"]`);
+    const selectedBtn = scrollContainerRef.current.querySelector(`[data-date="${selectedDate}"]`) as HTMLElement;
     if (selectedBtn) {
-      selectedBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      const container = scrollContainerRef.current;
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = selectedBtn.getBoundingClientRect();
+      const scrollOffset = (btnRect.left - containerRect.left) - (containerRect.width / 2) + (btnRect.width / 2);
+      if (Math.abs(scrollOffset) > 5) {
+        container.scrollBy({ left: scrollOffset, behavior: 'smooth' });
+      }
     }
   }, [selectedDate]);
 
