@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+:root {
+  --arena-lime: #c2f154;
+  --arena-gray-bg: #384148;
+  --arena-gray-card: #2a333a;
+  --arena-gray-dark: #22292f;
+}
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #f1f5f9;
+    background-color: #384148;
+    overflow-x: hidden;
+  }
+  
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Montserrat', 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+.font-heading {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Professional Staggered Motion Blur Fly-In / Fly-Out Animations with Speed Drag */
+@keyframes blurInFlyOut1 {
+  0% {
+    opacity: 0;
+    filter: blur(30px) contrast(1.5) brightness(1.3);
+    transform: translateX(-160px) scaleX(1.35) skewX(-5deg);
+  }
+  6% {
+    opacity: 1;
+    filter: blur(0px) contrast(1) brightness(1);
+    transform: translateX(0) scaleX(1) skewX(0deg);
+  }
+  88% {
+    opacity: 1;
+    filter: blur(0px) contrast(1) brightness(1);
+    transform: translateX(0) scaleX(1) skewX(0deg);
+  }
+  94% {
+    opacity: 0;
+    filter: blur(32px) contrast(1.6) brightness(1.3);
+    transform: translateX(160px) scaleX(1.4) skewX(5deg);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(32px);
+    transform: translateX(160px);
+  }
+}
+
+@keyframes blurInFlyOut2 {
+  0%, 2% {
+    opacity: 0;
+    filter: blur(30px) contrast(1.5) brightness(1.3);
+    transform: translateX(-160px) scaleX(1.35) skewX(-5deg);
+  }
+  8% {
+    opacity: 1;
+    filter: blur(0px) contrast(1) brightness(1);
+    transform: translateX(0) scaleX(1) skewX(0deg);
+  }
+  90% {
+    opacity: 1;
+    filter: blur(0px) contrast(1) brightness(1);
+    transform: translateX(0) scaleX(1) skewX(0deg);
+  }
+  96% {
+    opacity: 0;
+    filter: blur(32px) contrast(1.6) brightness(1.3);
+    transform: translateX(160px) scaleX(1.4) skewX(5deg);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(32px);
+    transform: translateX(160px);
+  }
+}
+
+@keyframes blurInFlyOut3 {
+  0%, 4% {
+    opacity: 0;
+    filter: blur(30px) contrast(1.5) brightness(1.3);
+    transform: translateX(-160px) scaleX(1.35) skewX(-5deg);
+  }
+  10% {
+    opacity: 1;
+    filter: blur(0px) contrast(1) brightness(1);
+    transform: translateX(0) scaleX(1) skewX(0deg);
+  }
+  92% {
+    opacity: 1;
+    filter: blur(0px) contrast(1) brightness(1);
+    transform: translateX(0) scaleX(1) skewX(0deg);
+  }
+  98% {
+    opacity: 0;
+    filter: blur(32px) contrast(1.6) brightness(1.3);
+    transform: translateX(160px) scaleX(1.4) skewX(5deg);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(32px);
+    transform: translateX(160px);
+  }
+}
+
+@keyframes blurInFlyOut4 {
+  0%, 6% {
+    opacity: 0;
+    filter: blur(30px) contrast(1.5) brightness(1.3);
+    transform: translateX(-160px) scaleX(1.35) skewX(-5deg);
+  }
+  12% {
+    opacity: 1;
+    filter: blur(0px) contrast(1) brightness(1);
+    transform: translateX(0) scaleX(1) skewX(0deg);
+  }
+  94% {
+    opacity: 1;
+    filter: blur(0px) contrast(1) brightness(1);
+    transform: translateX(0) scaleX(1) skewX(0deg);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(32px) contrast(1.6) brightness(1.3);
+    transform: translateX(160px) scaleX(1.4) skewX(5deg);
+  }
+}
+
+.animate-stagger-1 {
+  animation: blurInFlyOut1 5.0s cubic-bezier(0.12, 0.95, 0.2, 1) forwards;
+  will-change: transform, filter, opacity;
+}
+
+.animate-stagger-2 {
+  animation: blurInFlyOut2 5.0s cubic-bezier(0.12, 0.95, 0.2, 1) forwards;
+  will-change: transform, filter, opacity;
+}
+
+.animate-stagger-3 {
+  animation: blurInFlyOut3 5.0s cubic-bezier(0.12, 0.95, 0.2, 1) forwards;
+  will-change: transform, filter, opacity;
+}
+
+.animate-stagger-4 {
+  animation: blurInFlyOut4 5.0s cubic-bezier(0.12, 0.95, 0.2, 1) forwards;
+  will-change: transform, filter, opacity;
+}
+
+/* Custom styles for colors */
+.bg-arena-lime {
+  background-color: #c2f154;
+}
+
+.text-arena-lime {
+  color: #c2f154;
+}
+
+.border-arena-lime {
+  border-color: #c2f154;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2b333a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #505c66;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #687784;
+}

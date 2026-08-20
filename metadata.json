@@ -1,0 +1,6 @@
+{
+  "name": "Complejo Arena - City Bell",
+  "description": "Plataforma oficial de Complejo Arena en City Bell: reservas de canchas de fútbol, hockey y tenis sintético, gestión y cotización de cumpleaños deportivos, escuelitas, torneos y buffet.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
