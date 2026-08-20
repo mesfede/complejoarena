@@ -88,15 +88,26 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-2 sm:gap-4 relative">
         
-        {/* Mobile: Logo slightly offset from left margin / Desktop: Standard padding */}
+        {/* Mobile: Logo with brand text & location / Desktop: Standard logo */}
         <div className="flex-1 lg:flex-initial flex items-center justify-start pl-1 sm:pl-0">
           <button 
             id="brand-logo-btn"
             onClick={() => handleNavClick('hero-section')}
-            className="flex items-center group focus:outline-none transition-transform active:scale-95 cursor-pointer py-0.5"
+            className="flex items-center gap-3 sm:gap-3.5 group focus:outline-none transition-transform active:scale-95 cursor-pointer py-0.5"
             aria-label="Ir al inicio"
           >
-            <ArenaLogo size="lg" className="scale-105 sm:scale-100 drop-shadow-sm" />
+            <ArenaLogo size="lg" className="scale-105 sm:scale-100 drop-shadow-sm shrink-0" />
+            
+            {/* Mobile Branding & Location info right next to logo */}
+            <div className="flex lg:hidden flex-col text-left justify-center border-l border-slate-300/80 pl-2.5 sm:pl-3 py-0.5">
+              <span className="font-heading font-black text-[14px] xs:text-[15px] sm:text-[16px] text-[#38414c] tracking-wider uppercase leading-none">
+                COMPLEJO ARENA
+              </span>
+              <span className="text-[10px] xs:text-[11px] sm:text-[11.5px] font-semibold text-slate-500 leading-tight mt-1 flex items-center gap-1">
+                <MapPin className="w-2.5 h-2.5 text-[#5e8012] shrink-0" />
+                <span className="truncate max-w-[145px] xs:max-w-[200px]">City Bell • Calle 21 A e/ 464 y 465</span>
+              </span>
+            </div>
           </button>
         </div>
 
@@ -124,24 +135,9 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
 
         {/* User & Action CTA Buttons */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-          
-          {/* My bookings pill (Now visible on BOTH Mobile & Desktop) */}
-          <button
-            id="my-bookings-nav-btn"
-            onClick={onOpenMyBookings}
-            className="relative flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-sm"
-          >
-            <User className="w-3.5 h-3.5 text-slate-600 shrink-0" />
-            <span className="text-[11px] sm:text-xs">Mis Turnos</span>
-            {userBookings.length > 0 && (
-              <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#c2f154] text-slate-950 font-black text-[9px] sm:text-[10px] flex items-center justify-center -mr-1 shadow-sm">
-                {userBookings.length}
-              </span>
-            )}
-          </button>
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
 
-          {/* Reservar Cancha CTA Button (Desktop only, avoiding mobile duplicate) */}
+          {/* Reservar Cancha CTA Button (Desktop only) */}
           <button
             id="cta-reserve-navbar"
             onClick={() => handleNavClick('canchas')}
@@ -190,19 +186,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
               );
             })}
-          </div>
-
-          <div className="pt-2 flex items-center justify-between border-t border-slate-100">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenMyBookings();
-              }}
-              className="flex items-center gap-2 text-xs font-bold text-slate-700 py-2"
-            >
-              <User className="w-4 h-4 text-slate-500" />
-              <span>Mis Reservas ({userBookings.length})</span>
-            </button>
           </div>
         </div>
       )}

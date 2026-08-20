@@ -196,8 +196,8 @@ export const BirthdaySection: React.FC = () => {
                 </span>
               </div>
 
-              {/* Prev / Next Arrows */}
-              <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md p-1.5 rounded-2xl border border-white/15">
+              {/* Prev / Next Arrows (Hidden on mobile) */}
+              <div className="hidden sm:flex items-center gap-2 bg-black/60 backdrop-blur-md p-1.5 rounded-2xl border border-white/15">
                 <button
                   onClick={handlePrevSlide}
                   className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
