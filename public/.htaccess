@@ -1,0 +1,14 @@
+# Configuration for Apache / Hostinger SPA Routing
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /complejoarena/
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . index.html [L]
+</IfModule>
+
+# Enable GZIP compression for faster loading
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
