@@ -223,10 +223,6 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
           {/* Section Header with Subtle Lime Glow */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#121c16] border border-[#c2f154]/30 text-[#c2f154] text-xs font-bold uppercase tracking-wider mb-2 shadow-sm">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Disponibilidad en Vivo</span>
-              </div>
               <h2 className="font-heading font-black text-3xl sm:text-4xl text-white tracking-tight uppercase">
                 ALQUILER DE CANCHAS
               </h2>

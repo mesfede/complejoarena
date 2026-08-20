@@ -157,10 +157,6 @@ export const MobileBookingView: React.FC<MobileBookingViewProps> = ({
       
       {/* 1. MOBILE SECTION HEADER */}
       <div className="border-b border-white/10 pb-3">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#121c16] border border-[#c2f154]/30 text-[#c2f154] text-[10px] font-bold uppercase tracking-wider mb-1.5 shadow-sm">
-          <Sparkles className="w-3 h-3" />
-          <span>Disponibilidad en Vivo</span>
-        </div>
         <h2 className="font-heading font-black text-2xl text-white tracking-tight uppercase">
           ALQUILER DE CANCHAS
         </h2>
@@ -221,48 +217,6 @@ export const MobileBookingView: React.FC<MobileBookingViewProps> = ({
           </div>
         </div>
       )}
-
-      {/* 4. COMPACT COURT PREVIEW BANNER */}
-      <div className="rounded-2xl overflow-hidden bg-[#152019] border border-white/20 shadow-lg relative animate-fadeIn">
-          <div className="relative p-4 flex flex-col justify-end min-h-[110px] overflow-hidden">
-            <img
-              src={courtImages[activePhotoIdx] || courtImages[0]}
-              alt={activeCourt.name}
-              className={`absolute inset-0 w-full h-full object-cover brightness-[0.85] transition-all duration-500 ${SPORT_THEMES[activeCourt.sport].saturationClass}`}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-
-            {/* Subcourt Selector if Hockey 5 */}
-            {matchingCourts.length > 1 && (
-              <div className="absolute top-2 right-2 z-10 flex gap-1 bg-black/80 backdrop-blur-md p-1 rounded-xl border border-white/20">
-                {matchingCourts.map((c) => (
-                  <button
-                    key={c.id}
-                    onClick={() => setSelectedSubCourtId(c.id)}
-                    className={`px-2 py-0.5 rounded-lg text-[10px] font-black uppercase transition-all ${
-                      selectedSubCourtId === c.id 
-                        ? `${SPORT_THEMES[activeSport].bgHex} text-slate-950 shadow-sm` 
-                        : 'text-slate-300'
-                    }`}
-                  >
-                    {c.name.includes('A') ? 'Cancha A' : 'Cancha B'}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Bottom Court Details: ONLY Name & Description */}
-            <div className="relative z-10">
-              <h3 className="font-heading font-black text-base text-white uppercase drop-shadow-md leading-tight">
-                {activeCourt.name}
-              </h3>
-              <p className="text-[11px] text-slate-200 mt-1 leading-snug drop-shadow-sm font-medium">
-                {activeCourt.description}
-              </p>
-            </div>
-          </div>
-        </div>
 
       {/* 3. TURNO FIJO MENSUAL COMPACT STRIP */}
       <div className="flex items-center justify-between bg-[#17231c] px-3.5 py-2 rounded-xl border border-[#c2f154]/20 shadow-sm">
