@@ -37,6 +37,7 @@ export const Hero: React.FC<HeroProps> = ({
   onNavigateSection 
 }) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
+  const [videoError, setVideoError] = useState<boolean>(false);
   const touchStartXRef = useRef<number | null>(null);
 
   // Dynamic slides cycling through Fútbol, Hockey, Cumpleaños, Turnos Nocturnos, Torneos y Escuelitas
@@ -145,28 +146,42 @@ export const Hero: React.FC<HeroProps> = ({
       className="relative min-h-[calc(100svh-60px)] lg:min-h-[760px] flex flex-col justify-between overflow-hidden border-b border-white/10"
     >
       {/* ========================================================================= */}
-      {/* SINGLE FULL-BLEED BACKGROUND PHOTO WITH SMOOTH DISSOLVE & SLIGHT ZOOM */}
+      {/* SINGLE FULL-BLEED BACKGROUND VIDEO WITH MESH OVERLAYS & VIGNETTES */}
       {/* ========================================================================= */}
       <div className="absolute inset-0 z-0 select-none overflow-hidden bg-black">
-        {heroSlides.map((slide, slideIdx) => {
-          const isActive = currentSlide === slideIdx;
-          return (
-            <div
-              key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'
-              }`}
-            >
-              <img
-                src={slide.image}
-                alt={slide.alt}
-                className={`w-full h-full object-cover object-center brightness-[0.78] contrast-[1.08] saturate-[1.12] transition-transform duration-[6500ms] ease-out ${
-                  isActive ? 'scale-105' : 'scale-100'
+        {!videoError ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            onError={() => setVideoError(true)}
+            className="w-full h-full object-cover object-center brightness-[0.78] contrast-[1.08] saturate-[1.12]"
+          >
+            <source src="./video/video-ca-hero_ok.mp4" type="video/mp4" />
+            <source src="./video-ca-hero_ok.mp4" type="video/mp4" />
+          </video>
+        ) : (
+          heroSlides.map((slide, slideIdx) => {
+            const isActive = currentSlide === slideIdx;
+            return (
+              <div
+                key={slide.id}
+                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                  isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
-              />
-            </div>
-          );
-        })}
+              >
+                <img
+                  src={slide.image}
+                  alt={slide.alt}
+                  className={`w-full h-full object-cover object-center brightness-[0.78] contrast-[1.08] saturate-[1.12] transition-transform duration-[6500ms] ease-out ${
+                    isActive ? 'scale-105' : 'scale-100'
+                  }`}
+                />
+              </div>
+            );
+          })
+        )}
 
         {/* Tramado deportivo sutil (Micro-mesh texture overlay) */}
         <div 
@@ -183,7 +198,7 @@ export const Hero: React.FC<HeroProps> = ({
           }}
         />
 
-        {/* Disolución a negro suavizada en los extremos para resaltar más las fotos */}
+        {/* Disolución a negro suavizada en los extremos para resaltar más el video */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-transparent to-black/55 pointer-events-none" />
         <div className="absolute top-0 inset-x-0 h-32 sm:h-44 bg-gradient-to-b from-black/65 via-black/20 to-transparent pointer-events-none" />
         <div className="absolute bottom-0 inset-x-0 h-48 sm:h-56 bg-gradient-to-t from-black/85 via-[#1a2227]/55 to-transparent pointer-events-none" />
